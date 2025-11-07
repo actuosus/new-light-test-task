@@ -1,10 +1,6 @@
-# Elysia with Bun runtime
+# New Light Test Task
 
-## Getting Started
-To get started with this template, simply paste this command into your terminal:
-```bash
-bun create elysia ./elysia-example
-```
+Service using [Elysia](https://elysiajs.com/) framework and [Prisma ORM](https://www.prisma.io/) to manage tasks, with some queue processing using [Bull](https://www.npmjs.com/package/bull).
 
 ## Development
 To start the development server run:
@@ -13,3 +9,24 @@ bun run dev
 ```
 
 Open http://localhost:3000/ with your browser to see the result.
+
+Open http://localhost:3000/swagger to see the Swagger UI documentation.
+
+## Deployment
+To deploy this template to production, run:
+```bash
+bun run build
+```
+
+Then run:
+```bash
+bun run start
+```
+This will start the server in production mode.
+
+## Testing
+
+To run tests, use:
+```bash
+bun test
+```
