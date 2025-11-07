@@ -35,21 +35,20 @@ app.use(
 );
 app.use(createTaskRoutes(prisma));
 
-async function main() {
-  app.listen(PORT);
+const isVercel =
+  Boolean(process.env.VERCEL) ||
+  Boolean(process.env.NOW_REGION) ||
+  Boolean(process.env.VERCEL_REGION) ||
+  Boolean(process.env.VERCEL);
 
+if (!isVercel) {
+  // app.listen(PORT);
   logger.info("🦊 Elysia service started", {
     port: app.server?.port,
     hostname: app.server?.hostname,
   });
 }
 
-main()
-  .then(async () => {
-    await prisma.$disconnect();
-  })
-  .catch(async (e) => {
-    console.error(e);
-    await prisma.$disconnect();
-    process.exit(1);
-  });
+export default {
+  fetch: app.fetch,
+};

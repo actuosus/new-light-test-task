@@ -26,6 +26,7 @@ services:
       - "3000:3000"
     environment:
       # - DATABASE_URL=postgres://user:password@db:5432/new-light-test
+      - PORT=3000
       - DATABASE_URL=prisma+postgres://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqd3RfaWQiOjEsInNlY3VyZV9rZXkiOiJza19YQ3lWME5oRFNabVNIQjVGdzRfNzYiLCJhcGlfa2V5IjoiMDFLOUM4TkVTQkNXMEdYQ1hCQlhaVzc0UzMiLCJ0ZW5hbnRfaWQiOiIzNWRhMTM1NzU2NWVkYTY2Mjk5OWZiYWYzYmE1ZjcyN2IxZmQ3YmM0NjgyYzY1MDIxZDI3YTVlZjAwYzI1MDhhIiwiaW50ZXJuYWxfc2VjcmV0IjoiOTliMGZkYzItYmUxOC00YTU1LWJjYTctZDZhOGY3OTE3MzQ2In0.s8M05aQWi9sDyJF2vRisBaCURCeUALGTeJ2PRPpJnE4
       - REDIS_URL=redis://redis:6379
     depends_on:
