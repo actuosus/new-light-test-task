@@ -19,7 +19,7 @@ export const swaggerPlugin = swagger({
       },
     },
     externalDocs: {
-      url: "https://github.com/actuosus/new-light-test",
+      url: "https://github.com/actuosus/new-light-test-task",
       description: "GitHub repository",
     },
     tags: [
