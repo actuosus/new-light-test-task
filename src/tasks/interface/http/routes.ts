@@ -52,12 +52,20 @@ export const createTaskRoutes = (db: PrismaClient) => {
         async ({ taskUseCases, params, set }) => {
           try {
             const task = await taskUseCases.get.execute(params.id);
+            console.log("Fetched task:", task);
+            if (!task) {
+              set.status = 404;
+              return {
+                status: "error",
+                message: "Task not found",
+              };
+            }
             return TaskModel.toTaskDto(task);
           } catch {
-            set.status = 404;
+            set.status = 500;
             return {
               status: "error",
-              message: "Task not found",
+              message: "Internal Server Error",
             };
           }
         },
@@ -68,6 +76,10 @@ export const createTaskRoutes = (db: PrismaClient) => {
             404: t.Object({
               status: t.String({ examples: ["error"] }),
               message: t.String({ examples: ["Task not found"] }),
+            }),
+            500: t.Object({
+              status: t.String({ examples: ["error"] }),
+              message: t.String({ examples: ["Internal Server Error"] }),
             }),
           },
           detail: {
@@ -97,7 +109,7 @@ export const createTaskRoutes = (db: PrismaClient) => {
           return TaskModel.toTaskDto(task);
         },
         {
-          body: TaskModel.createTaskBody,
+          body: TaskModel.createBody,
           response: {
             201: t.Object(TaskModel.TaskSchema),
             500: t.Object({
@@ -145,7 +157,7 @@ export const createTaskRoutes = (db: PrismaClient) => {
         },
         {
           params: TaskModel.updateParams,
-          body: TaskModel.updateTaskBody,
+          body: TaskModel.updateBody,
           response: {
             200: t.Object(TaskModel.TaskSchema),
             404: t.Object({

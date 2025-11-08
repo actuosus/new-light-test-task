@@ -2,12 +2,6 @@ import { t } from "elysia";
 import { Task } from "../../domain/Task";
 
 export namespace TaskModel {
-  enum TaskStatus {
-    pending = "pending",
-    in_progress = "in_progress",
-    completed = "completed",
-  }
-
   export const TaskSchema = {
     id: t.String({
       format: "uuid",
@@ -46,21 +40,9 @@ export namespace TaskModel {
         examples: ["2025-12-07T15:00:00.000Z"],
       })
     ),
-    createdAt: t.String({
-      format: "date-time",
-      title: "Created At",
-      description: "Creation timestamp of the task",
-      examples: ["2024-11-01T10:00:00.000Z"],
-    }),
-    updatedAt: t.String({
-      format: "date-time",
-      title: "Updated At",
-      description: "Last update timestamp of the task",
-      examples: ["2024-11-02T12:00:00.000Z"],
-    }),
   };
 
-  export const createTaskBody = t.Object({
+  export const createBody = t.Object({
     title: t.String({
       title: "Task Title",
       description: "Title of the task",
@@ -83,7 +65,7 @@ export namespace TaskModel {
     ),
   });
 
-  export type createTaskBody = typeof createTaskBody.static;
+  export type createBody = typeof createBody.static;
 
   export const getAllParams = t.Object({
     status: t.Optional(
@@ -115,14 +97,14 @@ export namespace TaskModel {
     id: t.String({
       format: "uuid",
       title: "Task ID",
-      description: "Unique identifier of the task",
+      description: "Unique identifier of the task to update",
       examples: [crypto.randomUUID()],
     }),
   });
 
   export type updateParams = typeof updateParams.static;
 
-  export const updateTaskBody = t.Object({
+  export const updateBody = t.Object({
     title: t.String({
       title: "Task Title",
       description: "Title of the task to update",
@@ -155,7 +137,7 @@ export namespace TaskModel {
     ),
   });
 
-  export type updateTaskBody = typeof updateTaskBody.static;
+  export type updateBody = typeof updateBody.static;
 
   export const deleteParams = t.Object({
     id: t.String({
@@ -174,8 +156,6 @@ export namespace TaskModel {
     description: task.description ?? null,
     status: task.status,
     dueDate: task.dueDate ? task.dueDate.toISOString() : null,
-    createdAt: task.createdAt.toISOString(),
-    updatedAt: task.updatedAt.toISOString(),
   });
 
   export const toTaskListDto = (tasks: Task[]) => tasks.map(toTaskDto);
