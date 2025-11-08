@@ -26,7 +26,13 @@ export class UpdateTask {
     });
 
     await this.repo.save(task);
-    this.dueDateQueue.add(task);
+
+    if (
+      task.dueDate &&
+      task.dueDate.getTime() - Date.now() < 24 * 60 * 60 * 1000
+    ) {
+      this.dueDateQueue.add(task);
+    }
 
     return task;
   }
