@@ -1,10 +1,20 @@
 # [New Light Test Task](https://new-light-test-task.vercel.app/)
 
-Service using [Elysia](https://elysiajs.com/) framework and [Prisma ORM](https://www.prisma.io/) to manage tasks, with some queue processing using [Bull](https://www.npmjs.com/package/bull).
+Service using [Bun](https://bun.sh/), [Elysia](https://elysiajs.com/) framework and [Prisma ORM](https://www.prisma.io/) to manage tasks, with some queue processing using [Bull](https://www.npmjs.com/package/bull).
 
 Swagger UI documentation is available at deployed at https://new-light-test-task.vercel.app/swagger.
 
 ## Development
+
+### Installation
+
+To install dependencies, run:
+```bash
+bun install
+```
+
+### Local Setup
+
 To start the development server run:
 ```bash
 bun run dev
@@ -14,17 +24,24 @@ Open http://localhost:3000/ with your browser to see the result.
 
 Open http://localhost:3000/swagger to see the Swagger UI documentation.
 
-## Deployment
-To deploy this template to production, run:
+Requires a local Redis server running on default port 6379 for queue processing.
+
+### Docker Setup
+
+To start the development server run:
 ```bash
-bun run build
+docker compose up --build
 ```
 
-Then run:
+Open http://localhost:3000/ with your browser to see the result.
+
+## Deployment
+
+You can also deploy the application to Vercel. Make sure to set the environment variables in the Vercel dashboard.
+
 ```bash
-bun run start
+bun run deploy
 ```
-This will start the server in production mode.
 
 ## Testing
 
