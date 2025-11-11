@@ -1,5 +1,5 @@
 import type { PrismaClient } from "@prisma/client";
-import { Context, Elysia, t } from "elysia";
+import { type Context, Elysia, t } from "elysia";
 import { TaskModel } from "./dto";
 import { createTaskPlugin } from "./taskPlugin";
 
