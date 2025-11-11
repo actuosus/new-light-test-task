@@ -12,7 +12,8 @@
     "drizzle:generate": "drizzle-kit generate",
     "drizzle:migrate": "drizzle-kit migrate",
     "drizzle:studio": "drizzle-kit studio",
-    "deploy": "vercel deploy --prod"
+    "deploy": "vercel deploy --prod",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@elysiajs/swagger": "^1.3.1",
