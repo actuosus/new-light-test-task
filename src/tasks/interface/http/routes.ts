@@ -233,7 +233,7 @@ export const createTaskRoutes = (db: PrismaClient) => {
         {
           params: TaskModel.deleteParams,
           response: {
-            204: t.Optional(t.Any({ default: "", description: "No content" })),
+            204: t.Any({ default: "", description: "No content" }),
           },
           detail: {
             tags: ["Tasks"],
