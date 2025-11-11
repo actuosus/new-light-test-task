@@ -6,11 +6,11 @@ import { GetTask } from "../../application/use-cases/GetTask";
 import { ListTasks } from "../../application/use-cases/ListTasks";
 import { UpdateTask } from "../../application/use-cases/UpdateTask";
 import { BullTaskDueCheckScheduler } from "../../infrastructure/queue/BullTaskDueCheckScheduler";
-import { PrismaTaskRepository } from "../../infrastructure/repositories/PrismaTaskRepository";
+import { DrizzleTaskRepository } from "../../infrastructure/repositories/DrizzleTaskRepository";
 
 const createTaskUseCases = (db: any) => {
-  const repo = new PrismaTaskRepository(db);
-  // const repo = new DrizzleTaskRepository(db);
+  // const repo = new PrismaTaskRepository(db);
+  const repo = new DrizzleTaskRepository(db);
   const dueCheckScheduler = new BullTaskDueCheckScheduler();
 
   return {

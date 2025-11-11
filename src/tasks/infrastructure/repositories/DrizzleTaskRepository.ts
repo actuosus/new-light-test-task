@@ -1,4 +1,3 @@
-import { validate as isUuid } from "uuid";
 import { eq } from "drizzle-orm";
 import { type NodePgDatabase } from "drizzle-orm/node-postgres";
 import { logger } from "../../../shared/infrastructure/logging/logger";
@@ -10,6 +9,11 @@ import {
 } from "../../domain/Task";
 import type { TaskRepository } from "../../domain/TaskRepository";
 import { tasks } from "../db/drizzle/schema";
+
+const isUuid = (value: string) =>
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
+    value
+  );
 
 export class DrizzleTaskRepository implements TaskRepository {
   private db: NodePgDatabase;
