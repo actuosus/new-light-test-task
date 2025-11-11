@@ -1,4 +1,5 @@
 import swagger from "@elysiajs/swagger";
+import packageJson from "../../../../package.json";
 
 export const swaggerPlugin = swagger({
   exclude: ["/swagger"],
@@ -6,20 +7,19 @@ export const swaggerPlugin = swagger({
   documentation: {
     info: {
       title: "New Light Task Service",
-      description:
-        "New Light Test Task Service built with Elysia Framework, demonstrating task management with logging and queue processing.",
-      version: "0.1.0",
+      description: packageJson.description,
+      version: packageJson.version,
       license: {
-        name: "MIT",
+        name: packageJson.license,
         url: "https://opensource.org/license/mit/",
       },
       contact: {
-        name: "Arthur Chafonov",
-        url: "https://www.linkedin.com/in/actuosus/",
+        name: packageJson.author.name,
+        url: packageJson.author.url,
       },
     },
     externalDocs: {
-      url: "https://github.com/actuosus/new-light-test-task",
+      url: packageJson.repository.url,
       description: "GitHub repository",
     },
     tags: [
