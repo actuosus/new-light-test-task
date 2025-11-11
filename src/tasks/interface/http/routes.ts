@@ -31,11 +31,18 @@ export const createTaskRoutes = (db: PrismaClient) => {
         {
           query: TaskModel.getAllParams,
           response: {
-            200: t.Array(t.Object(TaskModel.TaskSchema)),
-            500: t.Object({
-              status: t.String({ examples: ["error"] }),
-              message: t.String({ examples: ["Internal Server Error"] }),
+            200: t.Array(t.Object(TaskModel.TaskSchema), {
+              description: "List of task objects",
             }),
+            500: t.Object(
+              {
+                status: t.String({ examples: ["error"] }),
+                message: t.String({ examples: ["Internal Server Error"] }),
+              },
+              {
+                description: "Internal Server Error",
+              }
+            ),
           },
           detail: {
             tags: ["Tasks"],
@@ -71,15 +78,27 @@ export const createTaskRoutes = (db: PrismaClient) => {
         {
           params: TaskModel.getParams,
           response: {
-            200: t.Object(TaskModel.TaskSchema),
-            404: t.Object({
-              status: t.String({ examples: ["error"] }),
-              message: t.String({ examples: ["Task not found"] }),
+            200: t.Object(TaskModel.TaskSchema, {
+              description: "Retrieved task object",
             }),
-            500: t.Object({
-              status: t.String({ examples: ["error"] }),
-              message: t.String({ examples: ["Internal Server Error"] }),
-            }),
+            404: t.Object(
+              {
+                status: t.String({ examples: ["error"] }),
+                message: t.String({ examples: ["Task not found"] }),
+              },
+              {
+                description: "Task not found error",
+              }
+            ),
+            500: t.Object(
+              {
+                status: t.String({ examples: ["error"] }),
+                message: t.String({ examples: ["Internal Server Error"] }),
+              },
+              {
+                description: "Internal Server Error",
+              }
+            ),
           },
           detail: {
             tags: ["Tasks"],
@@ -110,11 +129,18 @@ export const createTaskRoutes = (db: PrismaClient) => {
         {
           body: TaskModel.createBody,
           response: {
-            201: t.Object(TaskModel.TaskSchema),
-            500: t.Object({
-              status: t.String({ examples: ["error"] }),
-              message: t.String({ examples: ["Internal Server Error"] }),
+            201: t.Object(TaskModel.TaskSchema, {
+              description: "Created task object",
             }),
+            500: t.Object(
+              {
+                status: t.String({ examples: ["error"] }),
+                message: t.String({ examples: ["Internal Server Error"] }),
+              },
+              {
+                description: "Internal Server Error",
+              }
+            ),
           },
           detail: {
             tags: ["Tasks"],
@@ -166,15 +192,27 @@ export const createTaskRoutes = (db: PrismaClient) => {
           params: TaskModel.updateParams,
           body: TaskModel.updateBody,
           response: {
-            200: t.Object(TaskModel.TaskSchema),
-            404: t.Object({
-              status: t.String({ examples: ["error"] }),
-              message: t.String({ examples: ["Task not found"] }),
+            200: t.Object(TaskModel.TaskSchema, {
+              description: "Updated task object",
             }),
-            500: t.Object({
-              status: t.String({ examples: ["error"] }),
-              message: t.String({ examples: ["Internal Server Error"] }),
-            }),
+            404: t.Object(
+              {
+                status: t.String({ examples: ["error"] }),
+                message: t.String({ examples: ["Task not found"] }),
+              },
+              {
+                description: "Task not found error",
+              }
+            ),
+            500: t.Object(
+              {
+                status: t.String({ examples: ["error"] }),
+                message: t.String({ examples: ["Internal Server Error"] }),
+              },
+              {
+                description: "Internal Server Error",
+              }
+            ),
           },
           detail: {
             tags: ["Tasks"],
@@ -195,7 +233,7 @@ export const createTaskRoutes = (db: PrismaClient) => {
         {
           params: TaskModel.deleteParams,
           response: {
-            204: t.Optional(t.Any({ default: "" })),
+            204: t.Optional(t.Any({ default: "", description: "No content" })),
           },
           detail: {
             tags: ["Tasks"],
