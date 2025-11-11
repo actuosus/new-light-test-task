@@ -5,7 +5,7 @@ export type TaskStatus = "pending" | "in_progress" | "completed";
 export interface TaskProps {
   id: TaskId;
   title: string;
-  description?: string;
+  description?: string | null;
   status: TaskStatus;
   dueDate?: Date | null;
   createdAt: Date;
@@ -15,7 +15,7 @@ export interface TaskProps {
 export class Task implements TaskProps {
   id!: TaskId;
   title!: string;
-  description?: string;
+  description?: string | null;
   status!: TaskStatus;
   dueDate?: Date | null;
   createdAt!: Date;

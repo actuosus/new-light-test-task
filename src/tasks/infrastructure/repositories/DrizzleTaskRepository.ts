@@ -1,20 +1,24 @@
 import { validate as isUuid } from "uuid";
-import {
-  PrismaClient,
-  Task as PrismaTask,
-} from "../../../generated/prisma/client";
+import { eq } from "drizzle-orm";
+import { type PostgresJsDatabase } from "drizzle-orm/postgres-js";
 import { logger } from "../../../shared/infrastructure/logging/logger";
-import { Task, type TaskId, type TaskStatus } from "../../domain/Task";
+import {
+  Task,
+  TaskProps,
+  type TaskId,
+  type TaskStatus,
+} from "../../domain/Task";
 import type { TaskRepository } from "../../domain/TaskRepository";
+import { tasks } from "../db/drizzle/schema";
 
-export class PrismaTaskRepository implements TaskRepository {
-  private db: PrismaClient;
+export class DrizzleTaskRepository implements TaskRepository {
+  private db: PostgresJsDatabase;
 
-  constructor(db: PrismaClient) {
+  constructor(db: PostgresJsDatabase) {
     this.db = db;
   }
 
-  private toDomain(record: PrismaTask): Task {
+  private toDomain(record: TaskProps): Task {
     return Task.restore({
       id: record.id,
       title: record.title,
@@ -27,23 +31,27 @@ export class PrismaTaskRepository implements TaskRepository {
   }
 
   async findById(id: TaskId): Promise<Task | null> {
-    const record = await this.db.task.findUnique({ where: { id } });
+    const record = (
+      await this.db
+        .select()
+        .from(tasks)
+        .where(eq(tasks.id, id))
+        .limit(1)
+        .execute()
+    )[0];
     return record ? this.toDomain(record) : null;
   }
 
   async findAll({ status }: { status?: TaskStatus } = {}): Promise<Task[]> {
-    const records = await this.db.task.findMany({
-      where: status ? { status } : undefined,
-    });
+    const records = await this.db
+      .select()
+      .from(tasks)
+      .where(status ? eq(tasks.status, status) : undefined);
     return records.map(this.toDomain);
   }
 
   async save(task: Task): Promise<void> {
-    await this.db.task.upsert({
-      where: { id: task.id },
-      update: task,
-      create: task,
-    });
+    await this.db.insert(tasks).values(task);
   }
 
   async delete(id: TaskId): Promise<Task | void> {
@@ -53,7 +61,18 @@ export class PrismaTaskRepository implements TaskRepository {
     }
 
     try {
-      const task = await this.db.task.delete({ where: { id } });
+      const deletedTasks = await this.db
+        .delete(tasks)
+        .where(eq(tasks.id, id))
+        .returning();
+
+      const task = deletedTasks[0];
+
+      if (!task) {
+        logger.debug("Delete on non-existent task", { id });
+        return;
+      }
+
       return this.toDomain(task);
     } catch (e: any) {
       if (e.code === "P2025") {

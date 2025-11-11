@@ -1,13 +1,11 @@
-import type { PrismaClient } from "@prisma/client";
 import { type Context, Elysia, t } from "elysia";
 import { TaskModel } from "./dto";
 import { createTaskPlugin } from "./taskPlugin";
-import { logger } from "../../../shared/infrastructure/logging/logger";
 
 const INSTANCE_NAME = "task-routes";
 const TASKS_PREFIX = "/tasks";
 
-export const createTaskRoutes = (db: PrismaClient) => {
+export const createTaskRoutes = (db: any) => {
   const createErrorBody = (message: string) => ({
     status: "error",
     message,
@@ -26,7 +24,6 @@ export const createTaskRoutes = (db: PrismaClient) => {
       name: INSTANCE_NAME,
       prefix: TASKS_PREFIX,
     })
-      .decorate("logger", logger)
       .use(createTaskPlugin(db))
       .model(
         "Task",

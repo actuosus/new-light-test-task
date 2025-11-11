@@ -1,4 +1,3 @@
-import type { PrismaClient } from "@prisma/client";
 import { Elysia } from "elysia";
 import { CreateTask } from "../../application/use-cases/CreateTask";
 import { DeleteTask } from "../../application/use-cases/DeleteTask";
@@ -6,10 +5,12 @@ import { GetTask } from "../../application/use-cases/GetTask";
 import { ListTasks } from "../../application/use-cases/ListTasks";
 import { UpdateTask } from "../../application/use-cases/UpdateTask";
 import { BullTaskDueCheckScheduler } from "../../infrastructure/queue/BullTaskDueCheckScheduler";
-import { PrismaTaskRepository } from "../../infrastructure/repositories/PrismaTaskRepository";
+import { DrizzleTaskRepository } from "../../infrastructure/repositories/DrizzleTaskRepository";
+import { logger } from "../../../shared/infrastructure/logging/logger";
 
-const createTaskUseCases = (db: PrismaClient) => {
-  const repo = new PrismaTaskRepository(db);
+const createTaskUseCases = (db: any) => {
+  // const repo = new PrismaTaskRepository(db);
+  const repo = new DrizzleTaskRepository(db);
   const dueCheckScheduler = new BullTaskDueCheckScheduler();
 
   return {
@@ -21,13 +22,15 @@ const createTaskUseCases = (db: PrismaClient) => {
   };
 };
 
-export const createTaskPlugin = (db: PrismaClient) => {
+export const createTaskPlugin = (db: any) => {
   const taskUseCases = createTaskUseCases(db);
 
   return new Elysia({
     name: "task-plugin",
     seed: "tasks",
-  }).decorate("taskUseCases", taskUseCases);
+  })
+    .decorate("logger", logger)
+    .decorate("taskUseCases", taskUseCases);
 };
 
 export type TaskUseCases = ReturnType<typeof createTaskUseCases>;
