@@ -1,7 +1,7 @@
 {
   "name": "new-light-test",
   "description": "New Light Test Task Service built with Elysia Framework, demonstrating task management with logging and queue processing.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "scripts": {
     "test": "bun test",
     "dev": "bun run --watch src/server.ts",
