@@ -2,6 +2,7 @@ import type { PrismaClient } from "@prisma/client";
 import { type Context, Elysia, t } from "elysia";
 import { TaskModel } from "./dto";
 import { createTaskPlugin } from "./taskPlugin";
+import { logger } from "../../../shared/infrastructure/logging/logger";
 
 const INSTANCE_NAME = "task-routes";
 const TASKS_PREFIX = "/tasks";
@@ -25,6 +26,7 @@ export const createTaskRoutes = (db: PrismaClient) => {
       name: INSTANCE_NAME,
       prefix: TASKS_PREFIX,
     })
+      .decorate("logger", logger)
       .use(createTaskPlugin(db))
       .model(
         "Task",
@@ -36,11 +38,12 @@ export const createTaskRoutes = (db: PrismaClient) => {
       // List
       .get(
         "",
-        async ({ taskUseCases, query, set }) => {
+        async ({ taskUseCases, query, set, logger }) => {
           try {
             const tasks = await taskUseCases.list.execute(query);
             return TaskModel.toTaskListDto(tasks);
           } catch (error) {
+            logger.error("Error listing tasks:", error);
             return createInternalServerErrorBody(set);
           }
         },
@@ -71,7 +74,8 @@ export const createTaskRoutes = (db: PrismaClient) => {
               return createNotFoundBody(set);
             }
             return TaskModel.toTaskDto(task);
-          } catch {
+          } catch (error) {
+            logger.error("Error getting task:", error);
             return createInternalServerErrorBody(set);
           }
         },
@@ -152,7 +156,8 @@ export const createTaskRoutes = (db: PrismaClient) => {
             }
 
             return TaskModel.toTaskDto(task);
-          } catch {
+          } catch (error) {
+            logger.error("Error updating task:", error);
             return createInternalServerErrorBody(set);
           }
         },
@@ -182,7 +187,8 @@ export const createTaskRoutes = (db: PrismaClient) => {
           try {
             await taskUseCases.delete.execute(params.id);
             set.status = 204;
-          } catch {
+          } catch (error) {
+            logger.error("Error deleting task:", error);
             return createInternalServerErrorBody(set);
           }
         },
