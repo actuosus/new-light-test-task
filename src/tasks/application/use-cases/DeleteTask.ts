@@ -5,6 +5,6 @@ export class DeleteTask {
   constructor(private readonly repo: TaskRepository) {}
 
   async execute(id: TaskId) {
-    await this.repo.delete(id);
+    return await this.repo.delete(id);
   }
 }

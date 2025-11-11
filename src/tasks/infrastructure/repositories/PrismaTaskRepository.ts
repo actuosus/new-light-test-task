@@ -50,14 +50,15 @@ export class PrismaTaskRepository implements TaskRepository {
     });
   }
 
-  async delete(id: TaskId): Promise<void> {
+  async delete(id: TaskId): Promise<Task | void> {
     if (!isUuid(id)) {
       logger.warn("Attempted delete with invalid UUID", { id });
       throw new Error("Invalid task id format");
     }
 
     try {
-      await this.db.task.delete({ where: { id } });
+      const task = await this.db.task.delete({ where: { id } });
+      return this.toDomain(task);
     } catch (e: any) {
       if (e.code === "P2025") {
         logger.debug("Delete on non-existent task", { id });

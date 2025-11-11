@@ -185,7 +185,10 @@ export const createTaskRoutes = (db: PrismaClient) => {
         "/:id",
         async ({ params, taskUseCases, set }) => {
           try {
-            await taskUseCases.delete.execute(params.id);
+            const task = await taskUseCases.delete.execute(params.id);
+            if (!task) {
+              return createNotFoundBody(set);
+            }
             set.status = 204;
           } catch (error) {
             logger.error("Error deleting task:", error);
@@ -196,6 +199,7 @@ export const createTaskRoutes = (db: PrismaClient) => {
           params: TaskModel.deleteParams,
           response: {
             204: t.Any({ default: "", description: "No content" }),
+            404: TaskModel.notFoundResponse,
             500: TaskModel.internalServerErrorResponse,
           },
           detail: {
