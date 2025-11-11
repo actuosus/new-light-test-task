@@ -1,6 +1,6 @@
 # [New Light Test Task](https://new-light-test-task.vercel.app/)
 
-Service using [Bun](https://bun.sh/), [Elysia](https://elysiajs.com/) framework and [Prisma ORM](https://www.prisma.io/) to manage tasks, with some queue processing using [Bull](https://www.npmjs.com/package/bull). Optional usage of [Drizzle ORM](https://drizzle-orm.github.io/drizzle-orm/) for database interactions.
+Service using [Bun](https://bun.sh/), [Elysia](https://elysiajs.com/) framework and [Drizzle ORM](https://drizzle-orm.github.io/drizzle-orm/) to manage tasks, with some queue processing using [Bull](https://www.npmjs.com/package/bull). Optional usage of [Prisma ORM](https://www.prisma.io/) for database interactions.
 
 Swagger UI documentation is available at deployed at https://new-light-test-task.vercel.app/swagger.
 
@@ -9,6 +9,7 @@ Swagger UI documentation is available at deployed at https://new-light-test-task
 ### Installation
 
 To install dependencies, run:
+
 ```bash
 bun install
 ```
@@ -16,28 +17,33 @@ bun install
 ### Environment Variables
 
 Create a `.env` file in the root of the project and add the following variables:
+
 ```bash
 PORT=3000
 DATABASE_URL=postgresql://user:password@localhost:5432/database
 REDIS_URL=redis://localhost:6379
 ```
 
-### Prisma Setup
-To generate the Prisma client, run:
-```bash
-bun run prisma:generate
-```
-
 ### Drizzle Setup
 
 To generate the Drizzle schema, run:
+
 ```bash
 bun run drizzle:generate
+```
+
+### Prisma Setup
+
+To generate the Prisma client, run:
+
+```bash
+bun run prisma:generate
 ```
 
 ### Local Setup
 
 To start the development server run:
+
 ```bash
 bun run dev
 ```
@@ -51,6 +57,7 @@ Requires a local Redis server running on default port 6379 for queue processing.
 ### Docker Setup
 
 To start the development server run:
+
 ```bash
 docker compose up --build
 ```
@@ -68,6 +75,7 @@ bun run deploy
 ## Testing
 
 To run tests, use:
+
 ```bash
 bun test
 ```

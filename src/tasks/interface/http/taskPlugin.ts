@@ -9,7 +9,6 @@ import { BullTaskDueCheckScheduler } from "../../infrastructure/queue/BullTaskDu
 import { DrizzleTaskRepository } from "../../infrastructure/repositories/DrizzleTaskRepository";
 
 const createTaskUseCases = (db: any) => {
-  // const repo = new PrismaTaskRepository(db);
   const repo = new DrizzleTaskRepository(db);
   const dueCheckScheduler = new BullTaskDueCheckScheduler();
 

@@ -2,24 +2,21 @@ import "dotenv/config";
 import { describe, it, expect, beforeAll, afterAll } from "bun:test";
 import { Elysia } from "elysia";
 import { createTaskRoutes } from "../src/tasks/interface/http/routes";
-import { PrismaClient } from "../src/generated/prisma/client";
-
-const prisma = new PrismaClient();
+// import { PrismaClient } from "../src/generated/prisma/client";
+import { db } from "../src/shared/infrastructure/db/drizzle";
 
 let app: any;
 let server: any;
 let baseUrl: string;
 
 beforeAll(async () => {
-  app = new Elysia().use(createTaskRoutes(prisma));
+  app = new Elysia().use(createTaskRoutes(db));
   server = app.listen(0);
   baseUrl = `http://${server.server.hostname}:${server.server.port}`;
 });
 
 afterAll(async () => {
-  await prisma.task.deleteMany();
   server.stop();
-  await prisma.$disconnect();
 });
 
 describe("Tasks API", () => {
