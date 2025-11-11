@@ -37,7 +37,7 @@ export namespace TaskModel {
         format: "date-time",
         title: "Due Date",
         description: "Due date of the task",
-        examples: ["2025-12-07T15:00:00.000Z"],
+        examples: [new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString()],
       })
     ),
   };
@@ -60,7 +60,7 @@ export namespace TaskModel {
       t.Date({
         title: "Due Date",
         description: "Due date of the task",
-        examples: ["2025-12-07T15:00:00.000Z"],
+        examples: [new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString()],
       })
     ),
   });
@@ -132,7 +132,7 @@ export namespace TaskModel {
       t.Date({
         title: "Due Date",
         description: "Due date of the task to update",
-        examples: ["2025-12-08T14:00:00.000Z"],
+        examples: [new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString()],
       })
     ),
   });
