@@ -2,7 +2,6 @@ import "dotenv/config";
 import { describe, it, expect, beforeAll, afterAll } from "bun:test";
 import { Elysia } from "elysia";
 import { createTaskRoutes } from "../src/tasks/interface/http/routes";
-// import { PrismaClient } from "../src/generated/prisma/client";
 import { db } from "../src/shared/infrastructure/db/drizzle";
 
 let app: any;
