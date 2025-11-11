@@ -1,6 +1,6 @@
 import { validate as isUuid } from "uuid";
 import { eq } from "drizzle-orm";
-import { type PostgresJsDatabase } from "drizzle-orm/postgres-js";
+import { type NodePgDatabase } from "drizzle-orm/node-postgres";
 import { logger } from "../../../shared/infrastructure/logging/logger";
 import {
   Task,
@@ -12,9 +12,9 @@ import type { TaskRepository } from "../../domain/TaskRepository";
 import { tasks } from "../db/drizzle/schema";
 
 export class DrizzleTaskRepository implements TaskRepository {
-  private db: PostgresJsDatabase;
+  private db: NodePgDatabase;
 
-  constructor(db: PostgresJsDatabase) {
+  constructor(db: NodePgDatabase) {
     this.db = db;
   }
 
