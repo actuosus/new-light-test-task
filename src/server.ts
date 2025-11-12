@@ -1,4 +1,5 @@
 import { Elysia } from "elysia";
+import { staticPlugin } from "@elysiajs/static";
 import { db } from "./shared/infrastructure/db/drizzle";
 import { logger } from "./shared/infrastructure/logging/pino";
 import { loggerPlugin } from "./shared/interface/http/loggerPlugin";
@@ -9,6 +10,7 @@ const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
 
 const app = new Elysia();
 
+app.use(staticPlugin({ assets: "./public", prefix: "/" }));
 app.get("/", () => "Hello! It's New Light Task Test Service!");
 app.use(loggerPlugin);
 app.use(swaggerPlugin);
