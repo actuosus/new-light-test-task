@@ -46,6 +46,7 @@ export const createTaskRoutes = (db: any) => {
         },
         {
           query: TaskModel.getAllParams,
+          parse: "application/json",
           response: {
             200: t.Array(t.Object(TaskModel.TaskSchema), {
               description: "List of task objects",
@@ -78,6 +79,7 @@ export const createTaskRoutes = (db: any) => {
         },
         {
           params: TaskModel.getParams,
+          parse: "application/json",
           response: {
             200: t.Object(TaskModel.TaskSchema, {
               description: "Retrieved task object",
@@ -201,6 +203,7 @@ export const createTaskRoutes = (db: any) => {
         },
         {
           params: TaskModel.deleteParams,
+          parse: "application/json",
           response: {
             204: t.Any({ default: "", description: "No content" }),
             404: TaskModel.notFoundResponse,
