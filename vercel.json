@@ -9,8 +9,7 @@
     },
     {
       "src": "src/server.ts",
-      "use": "@vercel/elysia",
-      "config": { "entrypoint": "src/server.ts" }
+      "use": "@vercel/elysia"
     }
   ],
   "routes": [

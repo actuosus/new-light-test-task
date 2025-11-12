@@ -14,7 +14,7 @@
     "drizzle:studio": "drizzle-kit studio",
     "migrate": "bun run drizzle:migrate",
     "deploy": "vercel deploy --prod",
-    "vercel-build": "",
+    "vercel-build": "echo 'Running Vercel build script...'",
     "postinstall": "drizzle-kit generate"
   },
   "dependencies": {
