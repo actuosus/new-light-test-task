@@ -32,8 +32,6 @@ yarn-error.log*
 
 # vercel
 .vercel
-!.vercel/output/config.json
-!.vercel/output/static/*
 
 **/*.trace
 **/*.zip
