@@ -38,6 +38,10 @@ export const createTaskRoutes = (db: any) => {
         async ({ taskUseCases, query, set, logger }) => {
           try {
             const tasks = await taskUseCases.list.execute(query);
+
+            set.headers["Cache-Control"] =
+              "s-maxage=10, stale-while-revalidate=59";
+
             return TaskModel.toTaskListDto(tasks);
           } catch (error) {
             logger.error(error, "Error listing tasks");
@@ -71,6 +75,10 @@ export const createTaskRoutes = (db: any) => {
             if (!task) {
               return createNotFoundBody(set);
             }
+
+            set.headers["Cache-Control"] =
+              "s-maxage=59, stale-while-revalidate=59";
+
             return TaskModel.toTaskDto(task);
           } catch (error) {
             logger.error(error, "Error getting task");

@@ -28,5 +28,25 @@
       "src": "/(.*)",
       "dest": "src/server.ts"
     }
+  ],
+  "headers": [
+    {
+      "source": "/tasks",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "s-maxage=10, stale-while-revalidate=59"
+        }
+      ]
+    },
+    {
+      "source": "/tasks/:id",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "s-maxage=59, stale-while-revalidate=59"
+        }
+      ]
+    }
   ]
 }
