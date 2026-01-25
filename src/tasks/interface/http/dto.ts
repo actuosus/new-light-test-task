@@ -49,6 +49,7 @@ export namespace TaskModel {
       {
         title: "Task Status",
         description: "Current status of the task",
+        default: "pending",
       }
     ),
     dueDate: t.Nullable(
@@ -94,7 +95,7 @@ export namespace TaskModel {
           t.Literal("in_progress", { description: "In progress tasks" }),
           t.Literal("completed", { description: "Completed tasks" }),
         ],
-        { description: "Filter by task status" }
+        { title: "Task Status", description: "Filter by task status" }
       )
     ),
   });

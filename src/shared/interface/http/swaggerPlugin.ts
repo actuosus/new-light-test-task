@@ -1,4 +1,4 @@
-import swagger from "@elysiajs/swagger";
+import openapi from "@elysiajs/openapi";
 import packageJson from "../../../../package.json";
 
 const externalDocs = (repository: string | { url: string }) => {
@@ -60,9 +60,12 @@ const licenseInfo = (license: string) => {
   }
 };
 
-export const swaggerPlugin = swagger({
-  exclude: ["/swagger"],
-  autoDarkMode: true,
+export const swaggerPlugin = openapi({
+  exclude: {
+    paths: ["/*"],
+  },
+  path: "/swagger",
+  provider: "scalar",
   documentation: {
     info: {
       title: "New Light Task Service",
