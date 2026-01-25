@@ -45,8 +45,5 @@
     "name": "Arthur Chafonov",
     "url": "https://github.com/actuosus/"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/actuosus/new-light-test-task"
-  }
+  "repository": "github:actuosus/new-light-test-task"
 }
